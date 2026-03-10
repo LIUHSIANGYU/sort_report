@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>氣泡排序法 - Bubble Sort</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            font-size: 1.8em;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .controls input {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .controls button {
+            padding: 10px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .controls button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .controls button:active {
+            transform: translateY(0);
+        }
+        
+        .visualization {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 3px;
+            height: 300px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .bar {
+            flex: 1;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px 5px 0 0;
+            transition: all 0.1s ease;
+            position: relative;
+            min-width: 20px;
+        }
+        
+        .bar.comparing {
+            background: #ff6b6b;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.8);
+        }
+        
+        .bar.sorted {
+            background: #51cf66;
+            box-shadow: 0 0 10px rgba(81, 207, 102, 0.8);
+        }
+        
+        .array-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 15px 0;
+            word-break: break-all;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border-left: 5px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        
+        .complexity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .complexity-card {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .complexity-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .complexity-card .value {
+            background: #667eea;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .complexity-card p {
+            font-size: 0.95em;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 4px solid #667eea;
+        }
+        
+        .stat-item .label {
+            font-size: 0.9em;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        
+        .stat-item .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .feature-list h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .feature-list ul {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+        
+        .feature-list.pros li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #51cf66;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .feature-list.cons li:before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #ff6b6b;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .status {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .status.show {
+            display: block;
+        }
+        
+        .status.info {
+            background: #e7f3ff;
+            color: #0066cc;
+            border-left: 5px solid #0066cc;
+        }
+        
+        .status.success {
+            background: #e6f4ea;
+            color: #137333;
+            border-left: 5px solid #34a853;
+        }
+        
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .speed-control label {
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .speed-control input[type="range"] {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .speed-value {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 5px;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .complexity-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 氣泡排序法 (Bubble Sort)</h1>
+            <p>視覺化演示與複雜度分析</p>
+        </div>
+        
+        <div class="content">
+            <!-- 控制面板 -->
+            <div class="section">
+                <h2>📊 互動演示</h2>
+                
+                <div class="controls">
+                    <input type="text" id="arrayInput" placeholder="輸入數字（以逗號分隔），如: 64,34,25,12,22,11,90" value="64,34,25,12,22,11,90">
+                    <button onclick="initializeArray()">重新載入</button>
+                    <button onclick="startSort()">開始排序</button>
+                    <button onclick="resetVisualization()">重置</button>
+                </div>
+                
+                <div class="speed-control">
+                    <label for="speedSlider">排序速度：</label>
+                    <input type="range" id="speedSlider" min="1" max="100" value="50">
+                    <span class="speed-value" id="speedValue">50ms</span>
+                </div>
+                
+                <div id="status" class="status"></div>
+                
+                <div class="visualization" id="visualization"></div>
+                
+                <div class="array-display" id="arrayDisplay"></div>
+                
+                <div class="stats" id="stats">
+                    <div class="stat-item">
+                        <div class="label">比較次數</div>
+                        <div class="value" id="comparisons">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="label">交換次數</div>
+                        <div class="value" id="swaps">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="label">執行時間</div>
+                        <div class="value" id="time">0ms</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 演算法說明 -->
+            <div class="section">
+                <h2>📖 演算法說明</h2>
+                
+                <div class="info-box">
+                    <h3>氣泡排序法的原理</h3>
+                    <p>氣泡排序是最簡單的排序演算法。它通過不斷比較相鄰的元素，將較大的元素交換到右邊，使得大的數值像氣泡一樣逐步「浮起」到陣列的右端。</p>
+                </div>
+                
+                <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">基本步驟：</h3>
+                <ol style="margin-left: 20px; line-height: 2;">
+                    <li>比較相鄰的兩個元素</li>
+                    <li>如果前一個元素大於後一個元素，則交換它們</li>
+                    <li>移動到下一對元素，重複步驟 1-2</li>
+                    <li>每次完整遍歷後，最大的元素會移到末尾</li>
+                    <li>重複此過程，直到陣列完全排序</li>
+                </ol>
+                
+                <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">JavaScript 實現：</h3>
+                <div class="code-block">
+function bubbleSort(arr) {
+    const n = arr.length;
+    let comparisons = 0;
+    let swaps = 0;
+    
+    for (let i = 0; i &lt; n - 1; i++) {
+        let swapped = false;
+        for (let j = 0; j &lt; n - i - 1; j++) {
+            comparisons++;
+            if (arr[j] &gt; arr[j + 1]) {
+                // 交換元素
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                swaps++;
+                swapped = true;
+            }
+        }
+        // 優化：若沒有交換則已排序
+        if (!swapped) break;
+    }
+    
+    return { comparisons, swaps };
+}
+                </div>
+            </div>
+            
+            <!-- 複雜度分析 -->
+            <div class="section">
+                <h2>⏱️ 時間與空間複雜度</h2>
+                
+                <div class="complexity-grid">
+                    <div class="complexity-card">
+                        <h3>最壞情況</h3>
+                        <div class="value">O(n²)</div>
+                        <p>陣列完全反序排列時需要最多的比較和交換</p>
+                    </div>
+                    
+                    <div class="complexity-card">
+                        <h3>平均情況</h3>
+                        <div class="value">O(n²)</div>
+                        <p>隨機排列的陣列需要約 n²/4 次比較</p>
+                    </div>
+                    
+                    <div class="complexity-card">
+                        <h3>最好情況</h3>
+                        <div class="value">O(n)</div>
+                        <p>陣列已排序時，優化版本只需 n-1 次比較</p>
+                    </div>
+                    
+                    <div class="complexity-card">
+                        <h3>空間複雜度</h3>
+                        <div class="value">O(1)</div>
+                        <p>只需常數空間用於臨時變數，In-place 排序</p>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3>詳細分析</h3>
+                    <p><strong>時間複雜度推導：</strong></p>
+                    <p>第一次遍歷需要 (n-1) 次比較</p>
+                    <p>第二次遍歷需要 (n-2) 次比較</p>
+                    <p>...</p>
+                    <p>第 (n-1) 次遍歷需要 1 次比較</p>
+                    <p>總共：(n-1) + (n-2) + ... + 1 = <strong>n(n-1)/2 ≈ n²</strong></p>
+                </div>
+            </div>
+            
+            <!-- 優缺點 -->
+            <div class="section">
+                <h2>⚖️ 優點與缺點</h2>
+                
+                <div class="features">
+                    <div class="feature-list pros">
+                        <h3>✓ 優點</h3>
+                        <ul>
+                            <li>實現簡單易懂</li>
+                            <li>空間複雜度低 (O(1))</li>
+                            <li>穩定排序</li>
+                            <li>對小規模陣列有效</li>
+                            <li>對接近排序的陣列高效</li>
+                            <li>不需要額外的記憶體</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-list cons">
+                        <h3>✗ 缺點</h3>
+                        <ul>
+                            <li>時間複雜度高 (O(n²))</li>
+                            <li>對大規模陣列不適用</li>
+                            <li>效率遠低於其他演算法</li>
+                            <li>實務中很少使用</li>
+                            <li>適應性差（無法利用陣列結構）</li>
+                            <li>內層迴圈密集</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 應用場景 -->
+            <div class="section">
+                <h2>🎯 適用場景</h2>
+                
+                <div class="info-box">
+                    <h3>何時使用氣泡排序？</h3>
+                    <ul style="margin-left: 20px; line-height: 2; margin-top: 10px;">
+                        <li><strong>教育用途：</strong> 學習排序演算法基礎</li>
+                        <li><strong>小規模數據：</strong> 少於 50 個元素的陣列</li>
+                        <li><strong>已排序數據：</strong> 陣列幾乎已排序時</li>
+                        <li><strong>空間限制：</strong> 需要 O(1) 額外空間的場景</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <h3>推薦替代方案</h3>
+                    <ul style="margin-left: 20px; line-height: 2; margin-top: 10px;">
+                        <li><strong>中等規模 (50-1000)：</strong> 插入排序或選擇排序</li>
+                        <li><strong>大規模 (1000+)：</strong> 快速排序、合併排序、堆排序</li>
+                        <li><strong>通用場景：</strong> 內建的 sort() 函數（通常使用 Timsort 等混合排序）</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let array = [64, 34, 25, 12, 22, 11, 90];
+        let isSorting = false;
+        let comparisons = 0;
+        let swaps = 0;
+        let startTime = 0;
+        
+        // 初始化陣列
+        function initializeArray() {
+            const input = document.getElementById('arrayInput').value;
+            if (input.trim()) {
+                array = input.split(',').map(x => parseInt(x.trim())).filter(x => !isNaN(x));
+                if (array.length === 0) {
+                    alert('請輸入有效的數字');
+                    return;
+                }
+            }
+            resetVisualization();
+        }
+        
+        // 重置視覺化
+        function resetVisualization() {
+            isSorting = false;
+            comparisons = 0;
+            swaps = 0;
+            document.getElementById('comparisons').textContent = '0';
+            document.getElementById('swaps').textContent = '0';
+            document.getElementById('time').textContent = '0ms';
+            document.getElementById('status').classList.remove('show');
+            updateVisualization();
+        }
+        
+        // 更新視覺化
+        function updateVisualization() {
+            const visualization = document.getElementById('visualization');
+            visualization.innerHTML = '';
+            
+            const maxValue = Math.max(...array);
+            const minValue = Math.min(...array);
+            const range = maxValue - minValue || 1;
+            
+            array.forEach((value, index) => {
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = ((value - minValue) / range * 100) + '%';
+                bar.id = `bar-${index}`;
+                visualization.appendChild(bar);
+            });
+            
+            const display = document.getElementById('arrayDisplay');
+            display.textContent = '[' + array.join(', ') + ']';
+        }
+        
+        // 交換元素
+        function swapArray(i, j) {
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        
+        // 高亮特定的條形
+        async function highlightBars(indices, className) {
+            indices.forEach(i => {
+                const bar = document.getElementById(`bar-${i}`);
+                if (bar) bar.classList.add(className);
+            });
+            await sleep(getSpeed());
+            indices.forEach(i => {
+                const bar = document.getElementById(`bar-${i}`);
+                if (bar) bar.classList.remove(className);
+            });
+        }
+        
+        // 延遲
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        // 獲取排序速度
+        function getSpeed() {
+            const speed = 101 - parseInt(document.getElementById('speedSlider').value);
+            return Math.max(1, speed);
+        }
+        
+        // 更新速度顯示
+        document.getElementById('speedSlider').addEventListener('input', function() {
+            const speed = 101 - parseInt(this.value);
+            document.getElementById('speedValue').textContent = Math.max(1, speed) + 'ms';
+        });
+        
+        // 開始排序
+        async function startSort() {
+            if (isSorting) return;
+            isSorting = true;
+            comparisons = 0;
+            swaps = 0;
+            startTime = Date.now();
+            
+            const n = array.length;
+            
+            for (let i = 0; i < n - 1; i++) {
+                let swapped = false;
+                
+                for (let j = 0; j < n - i - 1; j++) {
+                    comparisons++;
+                    
+                    // 高亮正在比較的元素
+                    await highlightBars([j, j + 1], 'comparing');
+                    
+                    if (array[j] > array[j + 1]) {
+                        swapArray(j, j + 1);
+                        swaps++;
+                        swapped = true;
+                        updateVisualization();
+                    }
+                    
+                    // 更新統計資訊
+                    document.getElementById('comparisons').textContent = comparisons;
+                    document.getElementById('swaps').textContent = swaps;
+                    document.getElementById('time').textContent = (Date.now() - startTime) + 'ms';
+                }
+                
+                // 標記已排序的部分
+                for (let k = n - i - 1; k < n; k++) {
+                    const bar = document.getElementById(`bar-${k}`);
+                    if (bar) bar.classList.add('sorted');
+                }
+                
+                if (!swapped) break;
+            }
+            
+            // 標記所有已排序
+            for (let i = 0; i < n; i++) {
+                const bar = document.getElementById(`bar-${i}`);
+                if (bar) bar.classList.add('sorted');
+            }
+            
+            const status = document.getElementById('status');
+            status.textContent = `✓ 排序完成！比較次數: ${comparisons}，交換次數: ${swaps}`;
+            status.className = 'status show success';
+            
+            isSorting = false;
+        }
+        
+        // 初始化
+        updateVisualization();
+    </script>
+</body>
+</html>
