@@ -4,10 +4,98 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Museum of Algorithms</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Georgia', serif;
+            background: #f7f5ee;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: #2c2a29;
+            color: #e8e2d3;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            letter-spacing: 2px;
+        }
+        nav {
+            background: #e8e2d3;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav a {
+            margin: 0 15px;
+            color: #2c2a29;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .intro {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .intro p {
+            font-size: 1.1em;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            background: #2c2a29;
+            color: #e8e2d3;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #2c2a29;
+            color: #e8e2d3;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background: #3a3837;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Home Page</h1>
-    <p><a href="ha.html">Go to HA</a></p>
+    <header>
+        <h1>Museum of Algorithms</h1>
+        <p>Explore the beauty of sorting techniques</p>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="ha.html">Bubble Sort Exhibit</a>
+    </nav>
+    <main>
+        <div class="intro">
+            <p>Welcome to our digital museum. Here you'll find curated exhibits showcasing classical algorithms through interactive demonstrations and educational content.</p>
+        </div>
+        <div class="gallery">
+            <h2>Featured Exhibits</h2>
+            <ul>
+                <li>Bubble Sort - a gentle introduction to sorting</li>
+                <!-- more exhibits could be added -->
+            </ul>
+            <a class="button" href="ha.html">Visit Bubble Sort</a>
+        </div>
+    </main>
+    <footer>
+        &copy; 2026 Museum of Algorithms. All rights reserved.
+    </footer>
 </body>
 </html>
