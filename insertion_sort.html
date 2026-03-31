@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-tw">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>氣泡排序法 - Bubble Sort</title>
+    <title>插入排序法 - Insertion Sort</title>
     <style>
         * {
             margin: 0;
@@ -150,6 +150,11 @@
         .bar.sorted {
             background: #51cf66;
             box-shadow: 0 0 10px rgba(81, 207, 102, 0.8);
+        }
+        
+        .bar.selected {
+            background: #ffd43b;
+            box-shadow: 0 0 10px rgba(255, 212, 59, 0.8);
         }
         
         .array-display {
@@ -382,7 +387,7 @@
             <a href="index.html" style="text-decoration: none; color: #8B6F47; font-weight: bold;">🏠 返回首頁</a>
         </nav>
         <div class="header">
-            <h1>🔄 氣泡排序法 (Bubble Sort)</h1>
+            <h1>📌 插入排序法 (Insertion Sort)</h1>
             <p>視覺化演示與複雜度分析</p>
         </div>
         
@@ -414,7 +419,7 @@
                         <div class="value" id="comparisons">0</div>
                     </div>
                     <div class="stat-item">
-                        <div class="label">交換次數</div>
+                        <div class="label">移動次數</div>
                         <div class="value" id="swaps">0</div>
                     </div>
                     <div class="stat-item">
@@ -427,39 +432,41 @@
             <details>
                 <summary>📖 演算法說明</summary>
                 <div class="info-box">
-                    <h3>氣泡排序法的原理</h3>
-                    <p>氣泡排序是最簡單的排序演算法。它通過不斷比較相鄰的元素，將較大的元素交換到右邊，使得大的數值像氣泡一樣逐步「浮起」到陣列的右端。</p>
+                    <h3>插入排序法的原理</h3>
+                    <p>插入排序透過逐步建立有序序列的方式進行排序。它將陣列分為已排序和未排序兩部分，每次從未排序部分取出一個元素，將其插入到已排序部分的正確位置。</p>
                 </div>
                 
                 <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">基本步驟：</h3>
                 <ol style="margin-left: 20px; line-height: 2;">
-                    <li>比較相鄰的兩個元素</li>
-                    <li>如果前一個元素大於後一個元素，則交換它們</li>
-                    <li>移動到下一對元素，重複步驟 1-2</li>
-                    <li>每次完整遍歷後，最大的元素會移到末尾</li>
-                    <li>重複此過程，直到陣列完全排序</li>
+                    <li>從第二個元素開始（第一個元素視為已排序）</li>
+                    <li>將當前元素與已排序部分的元素逐個比較</li>
+                    <li>找到適當位置後，將該元素插入</li>
+                    <li>已排序部分後移以容納新元素</li>
+                    <li>重複此過程，直到所有元素都被插入</li>
                 </ol>
                 
                 <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">JavaScript 實現：</h3>
                 <div class="code-block">
-function bubbleSort(arr) {
+function insertionSort(arr) {
     const n = arr.length;
     let comparisons = 0;
-    let swaps = 0;
+    let moves = 0;
     
-    for (let i = 0; i &lt; n - 1; i++) {
-        let swapped = false;
-        for (let j = 0; j &lt; n - i - 1; j++) {
+    for (let i = 1; i &lt; n; i++) {
+        const key = arr[i];
+        let j = i - 1;
+        
+        while (j &gt;= 0 && arr[j] &gt; key) {
             comparisons++;
-            if (arr[j] &gt; arr[j + 1]) {
-                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-                swaps++;
-                swapped = true;
-            }
+            arr[j + 1] = arr[j];
+            moves++;
+            j--;
         }
-        if (!swapped) break;
+        if (j &gt;= 0) comparisons++;
+        arr[j + 1] = key;
+        moves++;
     }
-    return { comparisons, swaps };
+    return { comparisons, moves };
 }
                 </div>
             </details>
@@ -470,7 +477,7 @@ function bubbleSort(arr) {
                     <div class="complexity-card">
                         <h3>最壞情況</h3>
                         <div class="value">O(n²)</div>
-                        <p>陣列完全反序排列時需要最多的比較和交換</p>
+                        <p>陣列完全反序排列時需要最多的比較</p>
                     </div>
                     <div class="complexity-card">
                         <h3>平均情況</h3>
@@ -499,7 +506,8 @@ function bubbleSort(arr) {
                             <li>實現簡單易懂</li>
                             <li>空間複雜度低 (O(1))</li>
                             <li>穩定排序</li>
-                            <li>對小規模陣列有效</li>
+                            <li>對小規模或幾乎排序的陣列非常高效</li>
+                            <li>線上排序（邊讀入邊排序）</li>
                         </ul>
                     </div>
                     <div class="feature-list cons">
@@ -507,8 +515,8 @@ function bubbleSort(arr) {
                         <ul>
                             <li>時間複雜度高 (O(n²))</li>
                             <li>對大規模陣列不適用</li>
-                            <li>效率遠低於其他演算法</li>
-                            <li>實務中很少使用</li>
+                            <li>移動操作較多</li>
+                            <li>效率遠低於快速排序等高級演算法</li>
                         </ul>
                     </div>
                 </div>
@@ -520,7 +528,7 @@ function bubbleSort(arr) {
         let array = [64, 34, 25, 12, 22, 11, 90];
         let isSorting = false;
         let comparisons = 0;
-        let swaps = 0;
+        let moves = 0;
         let startTime = 0;
         
         function initializeArray() {
@@ -547,7 +555,7 @@ function bubbleSort(arr) {
         function resetVisualization() {
             isSorting = false;
             comparisons = 0;
-            swaps = 0;
+            moves = 0;
             document.getElementById('comparisons').textContent = '0';
             document.getElementById('swaps').textContent = '0';
             document.getElementById('time').textContent = '0ms';
@@ -571,10 +579,6 @@ function bubbleSort(arr) {
             });
             
             document.getElementById('arrayDisplay').textContent = '[' + array.join(', ') + ']';
-        }
-        
-        function swapArray(i, j) {
-            [array[i], array[j]] = [array[j], array[i]];
         }
         
         async function highlightBars(indices, className) {
@@ -607,44 +611,54 @@ function bubbleSort(arr) {
             if (isSorting) return;
             isSorting = true;
             comparisons = 0;
-            swaps = 0;
+            moves = 0;
             startTime = Date.now();
             
             const n = array.length;
             
-            for (let i = 0; i < n - 1; i++) {
-                let swapped = false;
-                for (let j = 0; j < n - i - 1; j++) {
+            // 標記第一個元素為已排序
+            const bar0 = document.getElementById('bar-0');
+            if (bar0) bar0.classList.add('sorted');
+            
+            for (let i = 1; i < n; i++) {
+                const key = array[i];
+                let j = i - 1;
+                
+                await highlightBars([i], 'selected');
+                
+                while (j >= 0 && array[j] > key) {
                     comparisons++;
                     await highlightBars([j, j + 1], 'comparing');
                     
-                    if (array[j] > array[j + 1]) {
-                        swapArray(j, j + 1);
-                        swaps++;
-                        swapped = true;
-                        updateVisualization();
-                    }
+                    array[j + 1] = array[j];
+                    moves++;
+                    updateVisualization();
+                    j--;
                     
                     document.getElementById('comparisons').textContent = comparisons;
-                    document.getElementById('swaps').textContent = swaps;
+                    document.getElementById('swaps').textContent = moves;
                     document.getElementById('time').textContent = (Date.now() - startTime) + 'ms';
                 }
                 
-                for (let k = n - i - 1; k < n; k++) {
+                if (j >= 0) comparisons++;
+                
+                array[j + 1] = key;
+                moves++;
+                updateVisualization();
+                
+                // 標記已排序部分
+                for (let k = 0; k <= i; k++) {
                     const bar = document.getElementById(`bar-${k}`);
                     if (bar) bar.classList.add('sorted');
                 }
                 
-                if (!swapped) break;
-            }
-            
-            for (let i = 0; i < n; i++) {
-                const bar = document.getElementById(`bar-${i}`);
-                if (bar) bar.classList.add('sorted');
+                document.getElementById('comparisons').textContent = comparisons;
+                document.getElementById('swaps').textContent = moves;
+                document.getElementById('time').textContent = (Date.now() - startTime) + 'ms';
             }
             
             const status = document.getElementById('status');
-            status.textContent = `✓ 排序完成！比較次數: ${comparisons}，交換次數: ${swaps}`;
+            status.textContent = `✓ 排序完成！比較次數: ${comparisons}，移動次數: ${moves}`;
             status.className = 'status show success';
             
             isSorting = false;
@@ -654,3 +668,4 @@ function bubbleSort(arr) {
     </script>
 </body>
 </html>
+

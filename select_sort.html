@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #A0826D 0%, #8B6F47 100%);
+            background: linear-gradient(135deg, #2c2a29 0%, #3a3837 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -28,7 +28,7 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #A0826D 0%, #8B6F47 100%);
+            background: linear-gradient(135deg, #2c2a29 0%, #3a3837 100%);
             color: white;
             padding: 30px;
             text-align: center;
@@ -76,10 +76,9 @@
             min-width: 150px;
         }
         
-        /* 按鈕美化 */
         .controls button {
             padding: 12px 30px;
-            background: linear-gradient(135deg, #A0826D 0%, #8B6F47 100%);
+            background: linear-gradient(135deg, #2c2a29 0%, #3a3837 100%);
             color: white;
             border: none;
             border-radius: 50px;
@@ -91,7 +90,7 @@
         }
         
         .controls button:hover {
-            background: linear-gradient(135deg, #B39E89 0%, #9A7F55 100%);
+            background: linear-gradient(135deg, #3a3837 0%, #4a4845 100%);
             transform: translateY(-3px);
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
         }
@@ -103,14 +102,13 @@
         
         .controls button:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(139, 111, 71, 0.5);
+            box-shadow: 0 0 0 3px rgba(44, 42, 41, 0.5);
         }
         
-        /* 導航連結 */
         nav a {
             display: inline-block;
             padding: 8px 20px;
-            background: linear-gradient(135deg, #A0826D 0%, #8B6F47 100%);
+            background: linear-gradient(135deg, #2c2a29 0%, #3a3837 100%);
             color: white;
             border-radius: 50px;
             text-decoration: none;
@@ -118,7 +116,7 @@
         }
         
         nav a:hover {
-            background: linear-gradient(135deg, #B39E89 0%, #9A7F55 100%);
+            background: linear-gradient(135deg, #3a3837 0%, #4a4845 100%);
             transform: translateY(-2px);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
         }
@@ -137,7 +135,7 @@
         
         .bar {
             flex: 1;
-            background: linear-gradient(180deg, #A0826D 0%, #8B6F47 100%);
+            background: linear-gradient(180deg, #2c2a29 0%, #3a3837 100%);
             border-radius: 5px 5px 0 0;
             transition: all 0.1s ease;
             position: relative;
@@ -155,8 +153,8 @@
         }
         
         .bar.selected {
-            background: #ffd93d;
-            box-shadow: 0 0 10px rgba(255, 217, 61, 0.8);
+            background: #ffd43b;
+            box-shadow: 0 0 10px rgba(255, 212, 59, 0.8);
         }
         
         .array-display {
@@ -170,7 +168,7 @@
         }
         
         .info-box {
-            background: #f0e6d2;
+            background: #f5e6d3;
             border-left: 5px solid #8B6F47;
             padding: 15px;
             margin: 15px 0;
@@ -318,12 +316,6 @@
             display: block;
         }
         
-        .status.info {
-            background: #f0e6d2;
-            color: #8B6F47;
-            border-left: 5px solid #8B6F47;
-        }
-        
         .status.success {
             background: #e6f4ea;
             color: #137333;
@@ -337,7 +329,6 @@
             margin: 15px 0;
         }
         
-        /* details 樣式讓頁面更簡潔 */
         details {
             margin-bottom: 20px;
             border: 1px solid #ddd;
@@ -345,7 +336,6 @@
             padding: 10px 15px;
             background: #fafafa;
         }
-        
         details summary {
             font-size: 1.2em;
             font-weight: bold;
@@ -353,7 +343,6 @@
             cursor: pointer;
             outline: none;
         }
-        
         details[open] summary {
             color: #A0826D;
         }
@@ -394,17 +383,15 @@
 </head>
 <body>
     <div class="container">
-        <!-- navigation link back to home page -->
         <nav style="padding: 10px; background: #f0f0f0;">
-            <a href="index.html" style="text-decoration: none; color: white; font-weight: bold;">🏠 返回首頁</a>
+            <a href="index.html" style="text-decoration: none; color: #8B6F47; font-weight: bold;">🏠 返回首頁</a>
         </nav>
         <div class="header">
-            <h1>🎯 選擇排序法 (Selection Sort)</h1>
+            <h1>⭐ 選擇排序法 (Selection Sort)</h1>
             <p>視覺化演示與複雜度分析</p>
         </div>
         
         <div class="content">
-            <!-- 控制面板 -->
             <div class="section">
                 <h2>📊 互動演示</h2>
                 
@@ -423,9 +410,7 @@
                 </div>
                 
                 <div id="status" class="status"></div>
-                
                 <div class="visualization" id="visualization"></div>
-                
                 <div class="array-display" id="arrayDisplay"></div>
                 
                 <div class="stats" id="stats">
@@ -448,42 +433,37 @@
                 <summary>📖 演算法說明</summary>
                 <div class="info-box">
                     <h3>選擇排序法的原理</h3>
-                    <p>選擇排序是一種簡單的排序演算法。它每次從未排序的元素中找到最小的元素，放在已排序部分的末尾。通過這樣的選擇過程，逐步建立排序後的陣列。</p>
+                    <p>選擇排序是一種簡單的排序法。每次從未排序的元素中找到最小值，放在已排序部分的末尾。通過這樣的選擇過程，整個陣列逐步建立了有序序列。</p>
                 </div>
                 
-                <h3 style="color: #f5576c; margin-top: 20px; margin-bottom: 10px;">基本步驟：</h3>
+                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">基本步驟：</h3>
                 <ol style="margin-left: 20px; line-height: 2;">
-                    <li>在未排序的元素中找到最小值</li>
-                    <li>將最小值與未排序部分的第一個元素交換</li>
-                    <li>移動已排序部分的邊界向右移動一位</li>
-                    <li>重複此過程，直到整個陣列排序完成</li>
+                    <li>從未排序的元素中找到最小值</li>
+                    <li>將最小值與已排序部分的第一個元素交換</li>
+                    <li>移動已排序部分的邊界，向右移動一位</li>
+                    <li>重複此過程，直到所有陣列都排序完成</li>
                 </ol>
                 
-                <h3 style="color: #f5576c; margin-top: 20px; margin-bottom: 10px;">JavaScript 實現：</h3>
+                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">JavaScript 實現：</h3>
                 <div class="code-block">
 function selectionSort(arr) {
     const n = arr.length;
     let comparisons = 0;
     let swaps = 0;
-    
+
     for (let i = 0; i &lt; n - 1; i++) {
         let minIndex = i;
-        
-        // 在未排序部分找最小值
         for (let j = i + 1; j &lt; n; j++) {
             comparisons++;
             if (arr[j] &lt; arr[minIndex]) {
                 minIndex = j;
             }
         }
-        
-        // 若最小值不在目前位置，進行交換
         if (minIndex !== i) {
             [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
             swaps++;
         }
     }
-    
     return { comparisons, swaps };
 }
                 </div>
@@ -495,37 +475,23 @@ function selectionSort(arr) {
                     <div class="complexity-card">
                         <h3>最壞情況</h3>
                         <div class="value">O(n²)</div>
-                        <p>需要進行所有的比較和交換操作</p>
+                        <p>陣列完全反序排列時需要最多的比較</p>
                     </div>
-                    
                     <div class="complexity-card">
                         <h3>平均情況</h3>
                         <div class="value">O(n²)</div>
-                        <p>隨機排列的陣列需要約 n²/2 次比較</p>
+                        <p>隨機排列的陣列平均需要約 n²/2 次比較</p>
                     </div>
-                    
                     <div class="complexity-card">
                         <h3>最好情況</h3>
                         <div class="value">O(n²)</div>
-                        <p>即使陣列已排序，仍需所有比較操作</p>
+                        <p>即使陣列已排序，仍需進行完整的 n²/2 次比較</p>
                     </div>
-                    
                     <div class="complexity-card">
                         <h3>空間複雜度</h3>
                         <div class="value">O(1)</div>
-                        <p>只需常數空間用於臨時變數，In-place 排序</p>
+                        <p>只需常數空間，In-place 排序</p>
                     </div>
-                </div>
-                
-                <div class="info-box">
-                    <h3>詳細分析</h3>
-                    <p><strong>時間複雜度推導：</strong></p>
-                    <p>第一次遍歷需要 (n-1) 次比較</p>
-                    <p>第二次遍歷需要 (n-2) 次比較</p>
-                    <p>...</p>
-                    <p>第 (n-1) 次遍歷需要 1 次比較</p>
-                    <p>總共：(n-1) + (n-2) + ... + 1 = <strong>n(n-1)/2 ≈ n²</strong></p>
-                    <p><strong>關鍵區別：</strong>選擇排序的比較次數是固定的，無論輸入如何排列都是 n²/2 次比較，但交換次數最多 n-1 次。</p>
                 </div>
             </details>
             
@@ -537,69 +503,31 @@ function selectionSort(arr) {
                         <ul>
                             <li>實現簡單易懂</li>
                             <li>空間複雜度低 (O(1))</li>
-                            <li>交換次數少 (最多 n-1 次)</li>
+                            <li>交換次數最少</li>
                             <li>對小規模陣列有效</li>
-                            <li>不適應性排序但穩定性可控</li>
-                            <li>不需要額外的記憶體</li>
                         </ul>
                     </div>
-                    
                     <div class="feature-list cons">
                         <h3>✗ 缺點</h3>
                         <ul>
                             <li>時間複雜度高 (O(n²))</li>
-                            <li>比較次數固定，無法優化</li>
                             <li>對大規模陣列不適用</li>
-                            <li>效率遠低於其他演算法</li>
+                            <li>比較次數無法減少</li>
                             <li>實務中很少使用</li>
-                            <li>無法利用已排序的資料優勢</li>
                         </ul>
                     </div>
-                </div>
-            </details>
-            
-            <details>
-                <summary>🎯 適用場景</summary>
-                <div class="info-box">
-                    <h3>何時使用選擇排序？</h3>
-                    <ul style="margin-left: 20px; line-height: 2; margin-top: 10px;">
-                        <li><strong>教育用途：</strong> 學習排序演算法基礎</li>
-                        <li><strong>小規模數據：</strong> 少於 50 個元素的陣列</li>
-                        <li><strong>交換成本高：</strong> 當交換操作的成本遠高於比較時</li>
-                        <li><strong>空間限制：</strong> 需要 O(1) 額外空間的場景</li>
-                    </ul>
-                </div>
-                
-                <div class="info-box">
-                    <h3>與氣泡排序的比較</h3>
-                    <ul style="margin-left: 20px; line-height: 2; margin-top: 10px;">
-                        <li><strong>相似點：</strong> 時間複雜度都是 O(n²)，空間複雜度都是 O(1)</li>
-                        <li><strong>差異點：</strong> 選擇排序的比較次數固定，氣泡排序對已排序數據有優勢</li>
-                        <li><strong>推薦：</strong> 通常氣泡排序因易實現而更常用，但選擇排序交換更少</li>
-                    </ul>
-                </div>
-                
-                <div class="info-box">
-                    <h3>推薦替代方案</h3>
-                    <ul style="margin-left: 20px; line-height: 2; margin-top: 10px;">
-                        <li><strong>中等規模 (50-1000)：</strong> 快速排序或插入排序</li>
-                        <li><strong>大規模 (1000+)：</strong> 快速排序、合併排序、堆排序</li>
-                        <li><strong>通用場景：</strong> 內建的 sort() 函數（通常使用 Timsort 等混合排序）</li>
-                    </ul>
                 </div>
             </details>
         </div>
     </div>
     
     <script>
-        // 初始化陣列（可通過按鈕或隨機產生）
         let array = [64, 34, 25, 12, 22, 11, 90];
         let isSorting = false;
         let comparisons = 0;
         let swaps = 0;
         let startTime = 0;
         
-        // 初始化陣列
         function initializeArray() {
             const input = document.getElementById('arrayInput').value;
             if (input.trim()) {
@@ -612,7 +540,6 @@ function selectionSort(arr) {
             resetVisualization();
         }
 
-        // 隨機產生陣列
         function generateRandomArray() {
             let size = prompt('要產生幾個元素？(1-100)', '10');
             size = parseInt(size);
@@ -622,7 +549,6 @@ function selectionSort(arr) {
             resetVisualization();
         }
         
-        // 重置視覺化
         function resetVisualization() {
             isSorting = false;
             comparisons = 0;
@@ -634,11 +560,9 @@ function selectionSort(arr) {
             updateVisualization();
         }
         
-        // 更新視覺化
         function updateVisualization() {
             const visualization = document.getElementById('visualization');
             visualization.innerHTML = '';
-            
             const maxValue = Math.max(...array);
             const minValue = Math.min(...array);
             const range = maxValue - minValue || 1;
@@ -651,16 +575,13 @@ function selectionSort(arr) {
                 visualization.appendChild(bar);
             });
             
-            const display = document.getElementById('arrayDisplay');
-            display.textContent = '[' + array.join(', ') + ']';
+            document.getElementById('arrayDisplay').textContent = '[' + array.join(', ') + ']';
         }
         
-        // 交換元素
         function swapArray(i, j) {
             [array[i], array[j]] = [array[j], array[i]];
         }
         
-        // 高亮特定的條形
         async function highlightBars(indices, className) {
             indices.forEach(i => {
                 const bar = document.getElementById(`bar-${i}`);
@@ -673,24 +594,20 @@ function selectionSort(arr) {
             });
         }
         
-        // 延遲
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
         
-        // 獲取排序速度
         function getSpeed() {
             const speed = 101 - parseInt(document.getElementById('speedSlider').value);
             return Math.max(1, speed);
         }
         
-        // 更新速度顯示
         document.getElementById('speedSlider').addEventListener('input', function() {
             const speed = 101 - parseInt(this.value);
             document.getElementById('speedValue').textContent = Math.max(1, speed) + 'ms';
         });
         
-        // 開始排序
         async function startSort() {
             if (isSorting) return;
             isSorting = true;
@@ -703,45 +620,35 @@ function selectionSort(arr) {
             for (let i = 0; i < n - 1; i++) {
                 let minIndex = i;
                 
-                // 高亮目前正在檢查的位置
                 const bar = document.getElementById(`bar-${i}`);
                 if (bar) bar.classList.add('selected');
                 
-                // 在未排序部分找最小值
                 for (let j = i + 1; j < n; j++) {
                     comparisons++;
-                    
-                    // 高亮正在比較的元素
                     await highlightBars([minIndex, j], 'comparing');
                     
                     if (array[j] < array[minIndex]) {
                         minIndex = j;
                     }
                     
-                    // 更新統計資訊
                     document.getElementById('comparisons').textContent = comparisons;
                     document.getElementById('time').textContent = (Date.now() - startTime) + 'ms';
                 }
                 
-                // 若最小值不在目前位置，進行交換
                 if (minIndex !== i) {
                     swapArray(i, minIndex);
                     swaps++;
                     updateVisualization();
                 }
                 
-                // 移除已排序元素的高亮
                 if (bar) bar.classList.remove('selected');
                 
-                // 標記已排序的部分
                 const sortedBar = document.getElementById(`bar-${i}`);
                 if (sortedBar) sortedBar.classList.add('sorted');
                 
-                // 更新交換次數
                 document.getElementById('swaps').textContent = swaps;
             }
             
-            // 標記最後一個元素為已排序
             const lastBar = document.getElementById(`bar-${n - 1}`);
             if (lastBar) lastBar.classList.add('sorted');
             
@@ -752,7 +659,6 @@ function selectionSort(arr) {
             isSorting = false;
         }
         
-        // 初始化
         updateVisualization();
     </script>
 </body>
