@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-tw">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>插入排序法 - Insertion Sort</title>
+    <title>合併排序法 - Merge Sort</title>
     <style>
         * {
             margin: 0;
@@ -387,7 +387,7 @@
             <a href="index.html" style="text-decoration: none; color: white; font-weight: bold;">🏠 返回首頁</a>
         </nav>
         <div class="header">
-            <h1>📌 插入排序法 (Insertion Sort)</h1>
+            <h1>🔀 合併排序法 (Merge Sort)</h1>
             <p>視覺化演示與複雜度分析</p>
         </div>
         
@@ -419,7 +419,7 @@
                         <div class="value" id="comparisons">0</div>
                     </div>
                     <div class="stat-item">
-                        <div class="label">移動次數</div>
+                        <div class="label">合併次數</div>
                         <div class="value" id="swaps">0</div>
                     </div>
                     <div class="stat-item">
@@ -432,41 +432,43 @@
             <details>
                 <summary>📖 演算法說明</summary>
                 <div class="info-box">
-                    <h3>插入排序法的原理</h3>
-                    <p>插入排序透過逐步建立有序序列的方式進行排序。它將陣列分為已排序和未排序兩部分，每次從未排序部分取出一個元素，將其插入到已排序部分的正確位置。</p>
+                    <h3>合併排序法的原理</h3>
+                    <p>合併排序是一種分治演算法，採用「分而治之」的策略。它將陣列分割成更小的子陣列，然後遞迴地對每個子陣列進行排序，最後將已排序的子陣列合併回一個完整的排序陣列。</p>
                 </div>
                 
                 <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">基本步驟：</h3>
                 <ol style="margin-left: 20px; line-height: 2;">
-                    <li>從第二個元素開始（第一個元素視為已排序）</li>
-                    <li>將當前元素與已排序部分的元素逐個比較</li>
-                    <li>找到適當位置後，將該元素插入</li>
-                    <li>已排序部分後移以容納新元素</li>
-                    <li>重複此過程，直到所有元素都被插入</li>
+                    <li>分割：將陣列不斷分割成單個元素</li>
+                    <li>比較與合併：比較相鄰的元素並按順序合併</li>
+                    <li>遞迴合併：將兩個已排序的子陣列合併成一個排序的陣列</li>
+                    <li>重複此過程，直到陣列完全排序</li>
                 </ol>
                 
                 <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">JavaScript 實現：</h3>
                 <div class="code-block">
-function insertionSort(arr) {
-    const n = arr.length;
-    let comparisons = 0;
-    let moves = 0;
+function mergeSort(arr) {
+    if (arr.length &lt;= 1) return arr;
     
-    for (let i = 1; i &lt; n; i++) {
-        const key = arr[i];
-        let j = i - 1;
-        
-        while (j &gt;= 0 && arr[j] &gt; key) {
-            comparisons++;
-            arr[j + 1] = arr[j];
-            moves++;
-            j--;
+    const mid = Math.floor(arr.length / 2);
+    const left = mergeSort(arr.slice(0, mid));
+    const right = mergeSort(arr.slice(mid));
+    
+    return merge(left, right);
+}
+
+function merge(left, right) {
+    const result = [];
+    let i = 0, j = 0;
+    
+    while (i &lt; left.length && j &lt; right.length) {
+        if (left[i] &lt;= right[j]) {
+            result.push(left[i++]);
+        } else {
+            result.push(right[j++]);
         }
-        if (j &gt;= 0) comparisons++;
-        arr[j + 1] = key;
-        moves++;
     }
-    return { comparisons, moves };
+    
+    return result.concat(left.slice(i)).concat(right.slice(j));
 }
                 </div>
             </details>
@@ -476,23 +478,23 @@ function insertionSort(arr) {
                 <div class="complexity-grid">
                     <div class="complexity-card">
                         <h3>最壞情況</h3>
-                        <div class="value">O(n²)</div>
-                        <p>陣列完全反序排列時需要最多的比較</p>
+                        <div class="value">O(n log n)</div>
+                        <p>無論陣列如何排列，複雜度始終是 n log n</p>
                     </div>
                     <div class="complexity-card">
                         <h3>平均情況</h3>
-                        <div class="value">O(n²)</div>
-                        <p>隨機排列的陣列需要約 n²/4 次比較</p>
+                        <div class="value">O(n log n)</div>
+                        <p>隨機排列的陣列也需要 n log n 次操作</p>
                     </div>
                     <div class="complexity-card">
                         <h3>最好情況</h3>
-                        <div class="value">O(n)</div>
-                        <p>陣列已排序時，只需 n-1 次比較</p>
+                        <div class="value">O(n log n)</div>
+                        <p>即便陣列已排序，仍需 n log n 次操作</p>
                     </div>
                     <div class="complexity-card">
                         <h3>空間複雜度</h3>
-                        <div class="value">O(1)</div>
-                        <p>只需常數空間，In-place 排序</p>
+                        <div class="value">O(n)</div>
+                        <p>需要額外空間存儲臨時陣列</p>
                     </div>
                 </div>
             </details>
@@ -503,20 +505,20 @@ function insertionSort(arr) {
                     <div class="feature-list pros">
                         <h3>✓ 優點</h3>
                         <ul>
-                            <li>實現簡單易懂</li>
-                            <li>空間複雜度低 (O(1))</li>
+                            <li>穩定的複雜度 O(n log n)</li>
+                            <li>適用於大規模陣列排序</li>
                             <li>穩定排序</li>
-                            <li>對小規模或幾乎排序的陣列非常高效</li>
-                            <li>線上排序（邊讀入邊排序）</li>
+                            <li>適合外部排序和並行處理</li>
+                            <li>較小元素集合中表現出色</li>
                         </ul>
                     </div>
                     <div class="feature-list cons">
                         <h3>✗ 缺點</h3>
                         <ul>
-                            <li>時間複雜度高 (O(n²))</li>
-                            <li>對大規模陣列不適用</li>
-                            <li>移動操作較多</li>
-                            <li>效率遠低於快速排序等高級演算法</li>
+                            <li>需要額外 O(n) 空間</li>
+                            <li>對已排序陣列無優化</li>
+                            <li>遞迴調用開銷</li>
+                            <li>小規模資料下不如簡單排序高效</li>
                         </ul>
                     </div>
                 </div>
@@ -528,7 +530,7 @@ function insertionSort(arr) {
         let array = [64, 34, 25, 12, 22, 11, 90];
         let isSorting = false;
         let comparisons = 0;
-        let moves = 0;
+        let merges = 0;
         let startTime = 0;
         
         function initializeArray() {
@@ -555,7 +557,7 @@ function insertionSort(arr) {
         function resetVisualization() {
             isSorting = false;
             comparisons = 0;
-            moves = 0;
+            merges = 0;
             document.getElementById('comparisons').textContent = '0';
             document.getElementById('swaps').textContent = '0';
             document.getElementById('time').textContent = '0ms';
@@ -607,58 +609,80 @@ function insertionSort(arr) {
             document.getElementById('speedValue').textContent = Math.max(1, speed) + 'ms';
         });
         
+        async function mergeSortVisual(arr, left = 0, right = arr.length - 1) {
+            if (left < right) {
+                const mid = Math.floor((left + right) / 2);
+                
+                // 排序左半部分
+                await mergeSortVisual(arr, left, mid);
+                
+                // 排序右半部分
+                await mergeSortVisual(arr, mid + 1, right);
+                
+                // 合併
+                await mergeVisual(arr, left, mid, right);
+            }
+        }
+        
+        async function mergeVisual(arr, left, mid, right) {
+            const leftArr = arr.slice(left, mid + 1);
+            const rightArr = arr.slice(mid + 1, right + 1);
+            let i = 0, j = 0, k = left;
+            
+            while (i < leftArr.length && j < rightArr.length) {
+                comparisons++;
+                
+                const leftIdx = left + i;
+                const rightIdx = mid + 1 + j;
+                
+                await highlightBars([leftIdx, rightIdx], 'comparing');
+                
+                if (leftArr[i] <= rightArr[j]) {
+                    arr[k++] = leftArr[i++];
+                } else {
+                    arr[k++] = rightArr[j++];
+                }
+                
+                merges++;
+                updateVisualization();
+                
+                document.getElementById('comparisons').textContent = comparisons;
+                document.getElementById('swaps').textContent = merges;
+                document.getElementById('time').textContent = (Date.now() - startTime) + 'ms';
+            }
+            
+            while (i < leftArr.length) {
+                arr[k++] = leftArr[i++];
+                merges++;
+                updateVisualization();
+                document.getElementById('swaps').textContent = merges;
+            }
+            
+            while (j < rightArr.length) {
+                arr[k++] = rightArr[j++];
+                merges++;
+                updateVisualization();
+                document.getElementById('swaps').textContent = merges;
+            }
+            
+            // 標記已排序部分
+            for (let idx = left; idx <= right; idx++) {
+                const bar = document.getElementById(`bar-${idx}`);
+                if (bar) bar.classList.add('sorted');
+            }
+        }
+        
         async function startSort() {
             if (isSorting) return;
             isSorting = true;
             comparisons = 0;
-            moves = 0;
+            merges = 0;
             startTime = Date.now();
             
-            const n = array.length;
-            
-            // 標記第一個元素為已排序
-            const bar0 = document.getElementById('bar-0');
-            if (bar0) bar0.classList.add('sorted');
-            
-            for (let i = 1; i < n; i++) {
-                const key = array[i];
-                let j = i - 1;
-                
-                await highlightBars([i], 'selected');
-                
-                while (j >= 0 && array[j] > key) {
-                    comparisons++;
-                    await highlightBars([j, j + 1], 'comparing');
-                    
-                    array[j + 1] = array[j];
-                    moves++;
-                    updateVisualization();
-                    j--;
-                    
-                    document.getElementById('comparisons').textContent = comparisons;
-                    document.getElementById('swaps').textContent = moves;
-                    document.getElementById('time').textContent = (Date.now() - startTime) + 'ms';
-                }
-                
-                if (j >= 0) comparisons++;
-                
-                array[j + 1] = key;
-                moves++;
-                updateVisualization();
-                
-                // 標記已排序部分
-                for (let k = 0; k <= i; k++) {
-                    const bar = document.getElementById(`bar-${k}`);
-                    if (bar) bar.classList.add('sorted');
-                }
-                
-                document.getElementById('comparisons').textContent = comparisons;
-                document.getElementById('swaps').textContent = moves;
-                document.getElementById('time').textContent = (Date.now() - startTime) + 'ms';
-            }
+            await mergeSortVisual(array);
             
             const status = document.getElementById('status');
-            status.textContent = `✓ 排序完成！比較次數: ${comparisons}，移動次數: ${moves}`;
+            status.textContent = `✓ 排序完成！比較次數: ${comparisons}，合併次數: ${merges}`;
             status.className = 'status show success';
             
             isSorting = false;
@@ -668,4 +692,3 @@ function insertionSort(arr) {
     </script>
 </body>
 </html>
-
