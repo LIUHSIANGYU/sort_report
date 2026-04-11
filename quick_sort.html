@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>合併排序法 - Merge Sort</title>
+    <title>快速排序法 - Quick Sort</title>
     <style>
         * {
             margin: 0;
@@ -155,6 +155,11 @@
         .bar.selected {
             background: #ffd43b;
             box-shadow: 0 0 10px rgba(255, 212, 59, 0.8);
+        }
+        
+        .bar.pivot {
+            background: #845ef7;
+            box-shadow: 0 0 10px rgba(132, 94, 247, 0.8);
         }
         
         .array-display {
@@ -336,6 +341,7 @@
             padding: 10px 15px;
             background: #fafafa;
         }
+        
         details summary {
             font-size: 1.2em;
             font-weight: bold;
@@ -343,6 +349,7 @@
             cursor: pointer;
             outline: none;
         }
+        
         details[open] summary {
             color: #A0826D;
         }
@@ -387,7 +394,7 @@
             <a href="index.html" style="text-decoration: none; color: white; font-weight: bold;">🏠 返回首頁</a>
         </nav>
         <div class="header">
-            <h1>🔀 合併排序法 (Merge Sort)</h1>
+            <h1>⚡ 快速排序法 (Quick Sort)</h1>
             <p>視覺化演示與複雜度分析</p>
         </div>
         
@@ -419,7 +426,7 @@
                         <div class="value" id="comparisons">0</div>
                     </div>
                     <div class="stat-item">
-                        <div class="label">合併次數</div>
+                        <div class="label">交換次數</div>
                         <div class="value" id="swaps">0</div>
                     </div>
                     <div class="stat-item">
@@ -432,43 +439,48 @@
             <details>
                 <summary>📖 演算法說明</summary>
                 <div class="info-box">
-                    <h3>合併排序法的原理</h3>
-                    <p>合併排序是一種分治演算法，採用「分而治之」的策略。它將陣列分割成更小的子陣列，然後遞迴地對每個子陣列進行排序，最後將已排序的子陣列合併回一個完整的排序陣列。</p>
+                    <h3>快速排序法的原理</h3>
+                    <p>快速排序是一種分散-征服演算法，它通過選擇一個樞紐元素（pivot），將陣列分為兩部分：小於樞紐的元素和大於樞紐的元素。然後對這兩部分遞迴地進行相同的過程，直到整個陣列排序完成。</p>
                 </div>
                 
                 <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">基本步驟：</h3>
                 <ol style="margin-left: 20px; line-height: 2;">
-                    <li>分割：將陣列不斷分割成單個元素</li>
-                    <li>比較與合併：比較相鄰的元素並按順序合併</li>
-                    <li>遞迴合併：將兩個已排序的子陣列合併成一個排序的陣列</li>
-                    <li>重複此過程，直到陣列完全排序</li>
+                    <li>從陣列中選擇一個樞紐元素</li>
+                    <li>使用分割操作將陣列分為兩部分</li>
+                    <li>所有小於樞紐的元素移到左邊，大於樞紐的移到右邊</li>
+                    <li>遞迴地對左右兩個子陣列進行上述操作</li>
+                    <li>當子陣列大小為 1 時，陣列排序完成</li>
                 </ol>
                 
                 <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">JavaScript 實現：</h3>
                 <div class="code-block">
-function mergeSort(arr) {
-    if (arr.length &lt;= 1) return arr;
-    
-    const mid = Math.floor(arr.length / 2);
-    const left = mergeSort(arr.slice(0, mid));
-    const right = mergeSort(arr.slice(mid));
-    
-    return merge(left, right);
+async function quickSort(arr, low = 0, high = arr.length - 1) {
+    if (low &lt; high) {
+        const pi = await partition(arr, low, high);
+        await quickSort(arr, low, pi - 1);
+        await quickSort(arr, pi + 1, high);
+    }
 }
 
-function merge(left, right) {
-    const result = [];
-    let i = 0, j = 0;
+async function partition(arr, low, high) {
+    const pivot = arr[high];
+    let i = low - 1;
     
-    while (i &lt; left.length && j &lt; right.length) {
-        if (left[i] &lt;= right[j]) {
-            result.push(left[i++]);
-        } else {
-            result.push(right[j++]);
+    for (let j = low; j &lt; high; j++) {
+        comparisons++;
+        await highlightBars([j, high], 'comparing');
+        
+        if (arr[j] &lt; pivot) {
+            i++;
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+            moves++;
+            updateVisualization();
         }
     }
-    
-    return result.concat(left.slice(i)).concat(right.slice(j));
+    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+    moves++;
+    updateVisualization();
+    return i + 1;
 }
                 </div>
             </details>
@@ -478,23 +490,23 @@ function merge(left, right) {
                 <div class="complexity-grid">
                     <div class="complexity-card">
                         <h3>最壞情況</h3>
-                        <div class="value">O(n log n)</div>
-                        <p>無論陣列如何排列，複雜度始終是 n log n</p>
+                        <div class="value">O(n²)</div>
+                        <p>當樞紐始終为最小或最大元素時，每次只分割出1個元素</p>
                     </div>
                     <div class="complexity-card">
                         <h3>平均情況</h3>
                         <div class="value">O(n log n)</div>
-                        <p>隨機排列的陣列也需要 n log n 次操作</p>
+                        <p>樞紐較為平衡時，陣列平均被分成兩個相等的部分</p>
                     </div>
                     <div class="complexity-card">
                         <h3>最好情況</h3>
                         <div class="value">O(n log n)</div>
-                        <p>即便陣列已排序，仍需 n log n 次操作</p>
+                        <p>樞紐為中位數，陣列完全均勻分割</p>
                     </div>
                     <div class="complexity-card">
                         <h3>空間複雜度</h3>
-                        <div class="value">O(n)</div>
-                        <p>需要額外空間存儲臨時陣列</p>
+                        <div class="value">O(log n)</div>
+                        <p>遞迴調用棧的深度為 O(log n) 的平均情況</p>
                     </div>
                 </div>
             </details>
@@ -505,20 +517,21 @@ function merge(left, right) {
                     <div class="feature-list pros">
                         <h3>✓ 優點</h3>
                         <ul>
-                            <li>穩定的複雜度 O(n log n)</li>
-                            <li>適用於大規模陣列排序</li>
-                            <li>穩定排序</li>
-                            <li>適合外部排序和並行處理</li>
-                            <li>較小元素集合中表現出色</li>
+                            <li>平均時間複雜度好 (O(n log n))</li>
+                            <li>In-place 排序，空間效率高</li>
+                            <li>在實踐中性能非常好</li>
+                            <li>可以利用快取實現優化</li>
+                            <li>適用於大規模數據集</li>
                         </ul>
                     </div>
                     <div class="feature-list cons">
                         <h3>✗ 缺點</h3>
                         <ul>
-                            <li>需要額外 O(n) 空間</li>
-                            <li>對已排序陣列無優化</li>
-                            <li>遞迴調用開銷</li>
-                            <li>小規模資料下不如簡單排序高效</li>
+                            <li>最壞情況時間複雜度為 O(n²)</li>
+                            <li>不穩定排序</li>
+                            <li>遞迴實現需要額外棧空間</li>
+                            <li>樞紐選擇不好會嚴重影響效率</li>
+                            <li>對小規模數據集可能不如簡單排序高效</li>
                         </ul>
                     </div>
                 </div>
@@ -530,7 +543,7 @@ function merge(left, right) {
         let array = [64, 34, 25, 12, 22, 11, 90];
         let isSorting = false;
         let comparisons = 0;
-        let merges = 0;
+        let moves = 0;
         let startTime = 0;
         
         function initializeArray() {
@@ -557,7 +570,7 @@ function merge(left, right) {
         function resetVisualization() {
             isSorting = false;
             comparisons = 0;
-            merges = 0;
+            moves = 0;
             document.getElementById('comparisons').textContent = '0';
             document.getElementById('swaps').textContent = '0';
             document.getElementById('time').textContent = '0ms';
@@ -609,66 +622,59 @@ function merge(left, right) {
             document.getElementById('speedValue').textContent = Math.max(1, speed) + 'ms';
         });
         
-        async function mergeSortVisual(arr, left = 0, right = arr.length - 1) {
-            if (left < right) {
-                const mid = Math.floor((left + right) / 2);
-                
-                // 排序左半部分
-                await mergeSortVisual(arr, left, mid);
-                
-                // 排序右半部分
-                await mergeSortVisual(arr, mid + 1, right);
-                
-                // 合併
-                await mergeVisual(arr, left, mid, right);
-            }
-        }
-        
-        async function mergeVisual(arr, left, mid, right) {
-            const leftArr = arr.slice(left, mid + 1);
-            const rightArr = arr.slice(mid + 1, right + 1);
-            let i = 0, j = 0, k = left;
+        async function partition(low, high) {
+            const pivot = array[high];
+            let i = low - 1;
             
-            while (i < leftArr.length && j < rightArr.length) {
+            const bar = document.getElementById(`bar-${high}`);
+            if (bar) bar.classList.add('pivot');
+            await sleep(getSpeed());
+            
+            for (let j = low; j < high; j++) {
                 comparisons++;
+                await highlightBars([j, high], 'comparing');
                 
-                const leftIdx = left + i;
-                const rightIdx = mid + 1 + j;
-                
-                await highlightBars([leftIdx, rightIdx], 'comparing');
-                
-                if (leftArr[i] <= rightArr[j]) {
-                    arr[k++] = leftArr[i++];
-                } else {
-                    arr[k++] = rightArr[j++];
+                if (array[j] < pivot) {
+                    i++;
+                    [array[i], array[j]] = [array[j], array[i]];
+                    moves++;
+                    updateVisualization();
                 }
                 
-                merges++;
-                updateVisualization();
-                
                 document.getElementById('comparisons').textContent = comparisons;
-                document.getElementById('swaps').textContent = merges;
+                document.getElementById('swaps').textContent = moves;
                 document.getElementById('time').textContent = (Date.now() - startTime) + 'ms';
             }
             
-            while (i < leftArr.length) {
-                arr[k++] = leftArr[i++];
-                merges++;
-                updateVisualization();
-                document.getElementById('swaps').textContent = merges;
-            }
+            [array[i + 1], array[high]] = [array[high], array[i + 1]];
+            moves++;
+            updateVisualization();
             
-            while (j < rightArr.length) {
-                arr[k++] = rightArr[j++];
-                merges++;
-                updateVisualization();
-                document.getElementById('swaps').textContent = merges;
+            if (bar) bar.classList.remove('pivot');
+            
+            document.getElementById('comparisons').textContent = comparisons;
+            document.getElementById('swaps').textContent = moves;
+            document.getElementById('time').textContent = (Date.now() - startTime) + 'ms';
+            
+            return i + 1;
+        }
+        
+        async function quickSortHelper(low, high) {
+            if (low < high) {
+                const pi = await partition(low, high);
+                await quickSortHelper(low, pi - 1);
+                await quickSortHelper(pi + 1, high);
+            } else if (low === high) {
+                const bar = document.getElementById(`bar-${low}`);
+                if (bar) bar.classList.add('sorted');
             }
             
             // 標記已排序部分
-            for (let idx = left; idx <= right; idx++) {
-                const bar = document.getElementById(`bar-${idx}`);
-                if (bar) bar.classList.add('sorted');
+            if (low <= high) {
+                for (let k = low; k <= high; k++) {
+                    const bar = document.getElementById(`bar-${k}`);
+                    if (bar) bar.classList.add('sorted');
+                }
             }
         }
         
@@ -676,13 +682,13 @@ function merge(left, right) {
             if (isSorting) return;
             isSorting = true;
             comparisons = 0;
-            merges = 0;
+            moves = 0;
             startTime = Date.now();
             
-            await mergeSortVisual(array);
+            await quickSortHelper(0, array.length - 1);
             
             const status = document.getElementById('status');
-            status.textContent = `✓ 排序完成！比較次數: ${comparisons}，合併次數: ${merges}`;
+            status.textContent = `✓ 排序完成！比較次數: ${comparisons}，交換次數: ${moves}`;
             status.className = 'status show success';
             
             isSorting = false;
