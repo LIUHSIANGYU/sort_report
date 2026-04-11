@@ -645,8 +645,13 @@ INSERTION-SORT(A)<br>
             }
             
             const status = document.getElementById('status');
-            status.textContent = `✓ 排序完成！比較次數: ${comparisons}，移動次數: ${moves}`;
+            const endTime = Date.now();
+            const executionTime = endTime - startTime;
+            status.textContent = `✓ 排序完成！比較次數: ${comparisons}，移動次數: ${moves}，執行時間: ${executionTime}ms`;
             status.className = 'status show success';
+            
+            // 記錄數據到控制台（可用於收集實驗數據）
+            console.log(`插入排序 - 資料規模: ${array.length}, 比較次數: ${comparisons}, 移動次數: ${moves}, 執行時間: ${executionTime}ms`);
             
             isSorting = false;
         }
