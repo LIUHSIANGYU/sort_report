@@ -388,6 +388,15 @@
         
         <div class="content">
             <div class="section">
+                <h2>📖 操作原理</h2>
+                <div class="info-box">
+                    <h3>核心概念</h3>
+                    <p>氣泡排序法是最直觀的比較排序演算法。每次掃描陣列，逐一比較相鄰的兩個元素，若左邊的元素大於右邊的元素，就將它們互換。每完成一輪掃描，最大的元素就會「浮」至陣列末尾，就像泡泡一樣浮起。</p>
+                </div>
+                <h3 style="color: #8B6F47; margin-top: 15px; margin-bottom: 10px;">掃描過程</h3>
+                <p style="margin-bottom: 15px;">透過重複掃描，每次比較相鄰元素，若發現順序錯誤就互換。經過多輪掃描後，最大的元素逐步移到末尾，整個陣列最終達到有序狀態。</p>
+            </div>
+            <div class="section">
                 <h2>📊 互動演示</h2>
                 
                 <div class="controls">
@@ -431,36 +440,14 @@
                     <p>氣泡排序是最簡單的排序演算法。它通過不斷比較相鄰的元素，將較大的元素交換到右邊，使得大的數值像氣泡一樣逐步「浮起」到陣列的右端。</p>
                 </div>
                 
-                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">基本步驟：</h3>
-                <ol style="margin-left: 20px; line-height: 2;">
-                    <li>比較相鄰的兩個元素</li>
-                    <li>如果前一個元素大於後一個元素，則交換它們</li>
-                    <li>移動到下一對元素，重複步驟 1-2</li>
-                    <li>每次完整遍歷後，最大的元素會移到末尾</li>
-                    <li>重複此過程，直到陣列完全排序</li>
-                </ol>
-                
-                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">JavaScript 實現：</h3>
+                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">演算法偽代碼：</h3>
                 <div class="code-block">
-function bubbleSort(arr) {
-    const n = arr.length;
-    let comparisons = 0;
-    let swaps = 0;
-    
-    for (let i = 0; i &lt; n - 1; i++) {
-        let swapped = false;
-        for (let j = 0; j &lt; n - i - 1; j++) {
-            comparisons++;
-            if (arr[j] &gt; arr[j + 1]) {
-                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-                swaps++;
-                swapped = true;
-            }
-        }
-        if (!swapped) break;
-    }
-    return { comparisons, swaps };
-}
+BUBBLE-SORT(A)<br>
+    n = A.length<br>
+    for i = 1 to n-1<br>
+        for j = 1 to n-i<br>
+            if A[j] &gt; A[j+1]<br>
+                swap A[j] with A[j+1]
                 </div>
             </details>
             

@@ -393,6 +393,15 @@
         
         <div class="content">
             <div class="section">
+                <h2>📖 操作原理</h2>
+                <div class="info-box">
+                    <h3>核心概念</h3>
+                    <p>合併排序法採用分治策略。先將陣列遞迴分成更小的子陣列，直到每個子陣列只含一個元素（已排序）。然後開始合併，將兩個有序的子陣列合併成一個更大的有序陣列。重複此過程直到整個陣列合併完成。</p>
+                </div>
+                <h3 style="color: #8B6F47; margin-top: 15px; margin-bottom: 10px;">分治過程</h3>
+                <p style="margin-bottom: 15px;">分割階段不斷將陣列二分，直到每個元素獨立。合併階段比較兩個有序子陣列的元素，按順序放入新陣列。透過逐層向上合併，最終形成完全有序的陣列。</p>
+            </div>
+            <div class="section">
                 <h2>📊 互動演示</h2>
                 
                 <div class="controls">
@@ -436,40 +445,34 @@
                     <p>合併排序是一種分治演算法，採用「分而治之」的策略。它將陣列分割成更小的子陣列，然後遞迴地對每個子陣列進行排序，最後將已排序的子陣列合併回一個完整的排序陣列。</p>
                 </div>
                 
-                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">基本步驟：</h3>
-                <ol style="margin-left: 20px; line-height: 2;">
-                    <li>分割：將陣列不斷分割成單個元素</li>
-                    <li>比較與合併：比較相鄰的元素並按順序合併</li>
-                    <li>遞迴合併：將兩個已排序的子陣列合併成一個排序的陣列</li>
-                    <li>重複此過程，直到陣列完全排序</li>
-                </ol>
-                
-                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">JavaScript 實現：</h3>
+                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">演算法偽代碼：</h3>
                 <div class="code-block">
-function mergeSort(arr) {
-    if (arr.length &lt;= 1) return arr;
-    
-    const mid = Math.floor(arr.length / 2);
-    const left = mergeSort(arr.slice(0, mid));
-    const right = mergeSort(arr.slice(mid));
-    
-    return merge(left, right);
-}
-
-function merge(left, right) {
-    const result = [];
-    let i = 0, j = 0;
-    
-    while (i &lt; left.length && j &lt; right.length) {
-        if (left[i] &lt;= right[j]) {
-            result.push(left[i++]);
-        } else {
-            result.push(right[j++]);
-        }
-    }
-    
-    return result.concat(left.slice(i)).concat(right.slice(j));
-}
+MERGE-SORT(A, p, r)<br>
+    if p &lt; r<br>
+        q = floor((p + r) / 2)<br>
+        MERGE-SORT(A, p, q)<br>
+        MERGE-SORT(A, q+1, r)<br>
+        MERGE(A, p, q, r)<br>
+<br>
+MERGE(A, p, q, r)<br>
+    n1 = q - p + 1<br>
+    n2 = r - q<br>
+    create L[1..n1+1] and R[1..n2+1]<br>
+    for i = 1 to n1<br>
+        L[i] = A[p + i - 1]<br>
+    for j = 1 to n2<br>
+        R[j] = A[q + j]<br>
+    L[n1+1] = ∞<br>
+    R[n2+1] = ∞<br>
+    i = 1<br>
+    j = 1<br>
+    for k = p to r<br>
+        if L[i] ≤ R[j]<br>
+            A[k] = L[i]<br>
+            i = i + 1<br>
+        else<br>
+            A[k] = R[j]<br>
+            j = j + 1
                 </div>
             </details>
             

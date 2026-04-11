@@ -393,6 +393,15 @@
         
         <div class="content">
             <div class="section">
+                <h2>📖 操作原理</h2>
+                <div class="info-box">
+                    <h3>核心概念</h3>
+                    <p>插入排序法就像整理撲克牌一樣。將陣列分為已排序和未排序兩部分。每次從未排序部分取出一個元素，比較後插入到已排序部分的正確位置。透過逐步插入，最終整個陣列完成排序。</p>
+                </div>
+                <h3 style="color: #8B6F47; margin-top: 15px; margin-bottom: 10px;">插入過程</h3>
+                <p style="margin-bottom: 15px;">從陣列第二個元素開始，依次與已排序部分進行比較。找到恰當的位置後，將該元素插入並將已排序部分後移。不斷重複此過程，直到所有元素都被插入到已排序列中。</p>
+            </div>
+            <div class="section">
                 <h2>📊 互動演示</h2>
                 
                 <div class="controls">
@@ -436,38 +445,16 @@
                     <p>插入排序透過逐步建立有序序列的方式進行排序。它將陣列分為已排序和未排序兩部分，每次從未排序部分取出一個元素，將其插入到已排序部分的正確位置。</p>
                 </div>
                 
-                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">基本步驟：</h3>
-                <ol style="margin-left: 20px; line-height: 2;">
-                    <li>從第二個元素開始（第一個元素視為已排序）</li>
-                    <li>將當前元素與已排序部分的元素逐個比較</li>
-                    <li>找到適當位置後，將該元素插入</li>
-                    <li>已排序部分後移以容納新元素</li>
-                    <li>重複此過程，直到所有元素都被插入</li>
-                </ol>
-                
-                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">JavaScript 實現：</h3>
+                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">演算法偽代碼：</h3>
                 <div class="code-block">
-function insertionSort(arr) {
-    const n = arr.length;
-    let comparisons = 0;
-    let moves = 0;
-    
-    for (let i = 1; i &lt; n; i++) {
-        const key = arr[i];
-        let j = i - 1;
-        
-        while (j &gt;= 0 && arr[j] &gt; key) {
-            comparisons++;
-            arr[j + 1] = arr[j];
-            moves++;
-            j--;
-        }
-        if (j &gt;= 0) comparisons++;
-        arr[j + 1] = key;
-        moves++;
-    }
-    return { comparisons, moves };
-}
+INSERTION-SORT(A)<br>
+    for j = 2 to A.length<br>
+        key = A[j]<br>
+        i = j - 1<br>
+        while i &gt; 0 and A[i] &gt; key<br>
+            A[i+1] = A[i]<br>
+            i = i - 1<br>
+        A[i+1] = key
                 </div>
             </details>
             

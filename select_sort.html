@@ -393,6 +393,15 @@
         
         <div class="content">
             <div class="section">
+                <h2>📖 操作原理</h2>
+                <div class="info-box">
+                    <h3>核心概念</h3>
+                    <p>選擇排序法透過選擇未排序部分中的最小元素，將其放在已排序部分的末尾。每次掃描都會找出一個最小值，並將其移到正確位置。經過 n-1 輪這樣的選擇過程，整個陣列便完成排序。</p>
+                </div>
+                <h3 style="color: #8B6F47; margin-top: 15px; margin-bottom: 10px;">選擇過程</h3>
+                <p style="margin-bottom: 15px;">每一輪都從未排序的元素中找出最小值，然後與該輪應該放置的位置交換。隨著已排序部分不斷擴大，未排序部分逐漸縮小，最終排序完成。</p>
+            </div>
+            <div class="section">
                 <h2>📊 互動演示</h2>
                 
                 <div class="controls">
@@ -436,36 +445,15 @@
                     <p>選擇排序是一種簡單的排序法。每次從未排序的元素中找到最小值，放在已排序部分的末尾。通過這樣的選擇過程，整個陣列逐步建立了有序序列。</p>
                 </div>
                 
-                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">基本步驟：</h3>
-                <ol style="margin-left: 20px; line-height: 2;">
-                    <li>從未排序的元素中找到最小值</li>
-                    <li>將最小值與已排序部分的第一個元素交換</li>
-                    <li>移動已排序部分的邊界，向右移動一位</li>
-                    <li>重複此過程，直到所有陣列都排序完成</li>
-                </ol>
-                
-                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">JavaScript 實現：</h3>
+                <h3 style="color: #8B6F47; margin-top: 20px; margin-bottom: 10px;">演算法偽代碼：</h3>
                 <div class="code-block">
-function selectionSort(arr) {
-    const n = arr.length;
-    let comparisons = 0;
-    let swaps = 0;
-
-    for (let i = 0; i &lt; n - 1; i++) {
-        let minIndex = i;
-        for (let j = i + 1; j &lt; n; j++) {
-            comparisons++;
-            if (arr[j] &lt; arr[minIndex]) {
-                minIndex = j;
-            }
-        }
-        if (minIndex !== i) {
-            [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
-            swaps++;
-        }
-    }
-    return { comparisons, swaps };
-}
+SELECTION-SORT(A)<br>
+    for i = 1 to A.length - 1<br>
+        min = i<br>
+        for j = i + 1 to A.length<br>
+            if A[j] &lt; A[min]<br>
+                min = j<br>
+        swap A[i] with A[min]
                 </div>
             </details>
             
