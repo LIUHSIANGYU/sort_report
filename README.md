@@ -2,7 +2,7 @@
 
 學號: 11428216  
 姓名: 劉翔宇  
-模擬頁面: [https://github.com/LIUHSIANGYU/sort_report.git](https://github.com/LIUHSIANGYU/sort_report.git)
+模擬頁面: [https://liuhsiangyu.github.io/sort_report/](https://liuhsiangyu.github.io/sort_report/)
 
 ## 氣泡排序法
 
